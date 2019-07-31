@@ -9,6 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antstanley/msilocal"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "node-fetch": "^2.6.0"
