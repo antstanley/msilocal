@@ -89,3 +89,4 @@ typings/
 
 .DS_Store
 msilocal.json
+.vscode

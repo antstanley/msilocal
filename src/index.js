@@ -11,10 +11,14 @@ const startServer = async () => {
   try {
     const config = await fetchConfig()
     logger('info', 'Starting server')
-    localServer(config, port)
+    if (config) {
+      localServer(config, port)
+    } else {
+      logger('error', 'Unable to start server')
+    }
   } catch (error) {
     logger('error', `startServer: ${error}`)
   }
 }
 
-startServer()
+module.exports = startServer

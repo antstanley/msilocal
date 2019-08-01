@@ -23,7 +23,6 @@ const fetchToken = async config => {
 
     if (response.ok) {
       const json = await response.json()
-      logger('info', `body: ${json}`)
       if (json.access_token) {
         logger('info', 'Access Token retrieved')
         tokenResponse = json
