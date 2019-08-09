@@ -6,10 +6,9 @@ let tokenResponse = false
 
 const fetchToken = async config => {
   try {
-    const { clientId, clientSecret, authURL } = config
+    const { clientId, clientSecret, authURL, resource } = config
 
-    const body = `grant_type=client_credentials&client_id=${clientId}&client_Secret=${clientSecret}`
-
+    const body = `grant_type=client_credentials&client_id=${clientId}&client_Secret=${clientSecret}&resource=${resource}`
     const options = {
       method: 'POST',
       headers: {
@@ -20,9 +19,8 @@ const fetchToken = async config => {
     }
 
     const response = await fetch(authURL, options)
-
+    const json = await response.json()
     if (response.ok) {
-      const json = await response.json()
       if (json.access_token) {
         logger('info', 'Access Token retrieved')
         tokenResponse = json
@@ -32,11 +30,15 @@ const fetchToken = async config => {
     } else {
       logger(
         'error',
-        `statusCode: ${response.status}\nstatusMessage:${response.statusText}`
+        `statusCode: ${response.status}\nstatusMessage:${
+          response.statusText
+        }\nbody:${JSON.stringify(json, '', 2)}`
       )
+      tokenResponse = false
     }
   } catch (error) {
     logger('error', `fetchToken: ${error}`)
+    tokenResponse = false
   } finally {
     return tokenResponse
   }
