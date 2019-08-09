@@ -2,19 +2,32 @@ const fetchConfig = require('./fetchConfig.js')
 const localServer = require('./localServer.js')
 const logger = require('./logger.js')
 
-const port = Math.floor(Math.random() * 1000) + 4000
-
-process.env['MSI_ENDPOINT'] = `http://localhost:${port}`
-process.env['MSI_SECRET'] = 'msiLocalEmulator'
-
 const startServer = async () => {
   try {
     const config = await fetchConfig()
-    logger('info', 'Starting server')
-    if (config) {
-      localServer(config, port)
+    const endpoint = process.env['MSI_ENDPOINT']
+      ? process.env['MSI_ENDPOINT']
+      : false
+    const secret = process.env['MSI_SECRET'] ? process.env['MSI_SECRET'] : false
+
+    if (endpoint && secret) {
+      const portString = endpoint.substring(endpoint.lastIndexOf(':') + 1)
+      const port = parseInt(portString)
+      if (typeof port === 'number') {
+        logger('info', 'Starting server')
+        if (config) {
+          localServer(config, port)
+        } else {
+          logger('error', 'Unable to start server')
+        }
+      } else {
+        logger(
+          'error',
+          `Invalid port number ${port} specified. Please check the value of MSI_ENDPOINT ${endpoint}`
+        )
+      }
     } else {
-      logger('error', 'Unable to start server')
+      logger('error', 'MSI_ENDPOINT and/or MSI_SECRET not set.')
     }
   } catch (error) {
     logger('error', `startServer: ${error}`)
