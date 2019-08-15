@@ -7,37 +7,37 @@ const logger = (level, message) => {
   switch (level) {
     case 'info':
       console.log(
-        `${chalk.gray('msiLocal')} ${chalk.gray(
+        `${chalk.green('msiLocal')} ${chalk.gray(
           `[${nowString}]`
         )} ${chalk.green('\u2713')} ${chalk.cyan(message)}`
       )
       break
     case 'action':
       console.log(
-        `${chalk.gray('msiLocal')} ${chalk.gray(
+        `${chalk.green('msiLocal')} ${chalk.gray(
           `[${nowString}]`
         )} ${chalk.green('\u2713')} ${chalk.cyan(message)}`
       )
       break
     case 'warn':
       console.log(
-        `${chalk.gray('msiLocal')} ${chalk.gray(
+        `${chalk.yellow('msiLocal')} ${chalk.gray(
           `[${nowString}]`
         )} ${chalk.yellow(message)}`
       )
       break
     case 'error':
       console.log(
-        `${chalk.gray('msiLocal')} ${chalk.gray(`[${nowString}]`)} ${chalk.red(
+        `${chalk.red('msiLocal')} ${chalk.gray(`[${nowString}]`)} ${chalk.red(
           '\u274C'
         )} ${chalk.cyan(message)}`
       )
       break
     default:
       console.log(
-        `${chalk.gray('msiLocal')} ${chalk.gray(`[${nowString}]`)} ${chalk.blue(
-          message
-        )}`
+        `${chalk.green('msiLocal')} ${chalk.gray(
+          `[${nowString}]`
+        )} ${chalk.blue(message)}`
       )
   }
 }
